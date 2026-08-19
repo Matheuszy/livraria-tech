@@ -18,6 +18,5 @@ async def criar_conta(admin_schema: AdminSchema, session = Depends(get_session))
         novo_admin = Admin(admin_schema.username, admin_schema.email, cript)
         session.add(novo_admin)
         session.commit()
-        session.close()
         return {"message": f"Conta criada com sucesso {novo_admin.email}"}
 
