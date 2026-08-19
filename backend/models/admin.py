@@ -1,9 +1,9 @@
 from sqlalchemy import \
-    Column, Integer, String, ForeignKey
+    Column, Integer, String
 from backend.config.database_config import Base
 
 class Admin(Base):
-    __tablename___ = 'admin'
+    __tablename___ = 'admins'
 
     id = Column(
         "id",
