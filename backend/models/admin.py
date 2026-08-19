@@ -21,7 +21,7 @@ class Admin(Base):
     email = Column(
         "email",
         String(255), 
-        =False, 
+       nullable=False,
         unique=True)
 
     password = Column(
