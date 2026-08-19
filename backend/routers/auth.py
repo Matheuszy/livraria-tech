@@ -3,20 +3,21 @@ from backend.models.admin import Admin
 from sqlalchemy.orm import sessionmaker
 from backend.config.dependencies import get_session
 from backend.config.crypt_config import crypt_config, bcrypt
+from backend.schemas.admin_schema import AdminSchema
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
 @auth_router.post("/criar-conta")
-async def criar_conta(username: str,email: str, senha: str, session = Depends(get_session)):
+async def criar_conta(admin_schema: AdminSchema, session = Depends(get_session)):
 
-    admin = session.query(Admin).filter(Admin.email == email).first()
+    admin = session.query(Admin).filter(Admin.email == admin_schema.email).first()
     if admin:
-        return {"message": "Já existe uma conta com esse e-mail"}
+        raise HTTPException(status_code=400, detail="E-mail de usuário já cadastrado")
     else:
-        cript = bcrypt.hash(senha)
-        novo_admin = Admin(username, email, cript)
+        cript = bcrypt.hash(admin_schema.password)
+        novo_admin = Admin(admin_schema.username, admin_schema.email, cript)
         session.add(novo_admin)
         session.commit()
         session.close()
-        return {"message": "Conta criada com sucesso"}
+        return {"message": f"Conta criada com sucesso {novo_admin.email}"}
 

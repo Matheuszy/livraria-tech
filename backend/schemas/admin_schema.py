@@ -8,7 +8,7 @@ class AdminSchema(BaseModel):
 class AdminCreate(AdminSchema):
     pass
 
-class AdminResponse(AdminSchema)
+class AdminResponse(AdminSchema):
     id: int
     class Config:
         from_attributes = True
