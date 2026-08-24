@@ -1,16 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import sessionmaker
-from backend.config.crypt_config import crypt_config, bcrypt
+from sqlalchemy.orm import Session
+from backend.config.crypt_config import bcrypt
 from backend.config.dependencies import get_session
 from backend.schemas.cliente_schema import ClienteSchema
-from backend.config.database_config import crypt_config, bcrypt
 from backend.models.cliente import Cliente
+from backend.models.valueObjects.endereco import Endereco
 
 login_router = APIRouter(prefix="/login", tags=["login"])
 
 @login_router.post("/cliente-cadastro")
-async def cliente_cadastro(cliente_schema : ClienteSchema, session = Depends(get_session)):
-    cliente = session.query(models.Cliente).filter(models.Cliente.email == cliente_schema.email).first()
+async def cliente_cadastro(cliente_schema: ClienteSchema, session: Session = Depends(get_session)):
+    cliente = session.query(Cliente).filter(Cliente.email == cliente_schema.email).first()
     if cliente:
         raise HTTPException(status_code=400, detail="E-mail de usuário já cadastrado")
     else:
@@ -26,7 +26,7 @@ async def cliente_cadastro(cliente_schema : ClienteSchema, session = Depends(get
                                cliente_schema.email,
                                cript,
                                cliente_schema.telefone,
-                                novo_endereco
+                               novo_endereco
                                )
         session.add(novo_cliente)
         session.commit()

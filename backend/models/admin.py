@@ -1,9 +1,10 @@
 from sqlalchemy import \
     Column, Integer, String
 from backend.config.database_config import Base
+from sqlalchemy.orm import relationship
 
 class Admin(Base):
-    __tablename___ = 'admins'
+    __tablename__ = 'admins'
 
     id = Column(
         "id",
