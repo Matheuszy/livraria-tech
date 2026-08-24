@@ -20,7 +20,17 @@ class ClienteSchema(BaseModel):
 class ClienteCreate(ClienteSchema):
     pass
 
-class ClienteResponse(BaseModel):
-    id: int
-    class Config:
-        model_config = ConfigDict(from_attributes=True)
+    class ClienteResponse(BaseModel):
+        id: int
+        class Config:
+            model_config = ConfigDict(from_attributes=True)
+
+
+class LoginSchema(BaseModel):
+    email: str
+    password: str
+
+
+    class LoginResponse(BaseModel):
+        class Config:
+            model_config = ConfigDict(from_attributes=True)
