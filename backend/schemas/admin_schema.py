@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,ConfigDict
 
 class AdminSchema(BaseModel):
     username: str
@@ -11,4 +11,4 @@ class AdminCreate(AdminSchema):
 class AdminResponse(AdminSchema):
     id: int
     class Config:
-        from_attributes = True
+        model_config = ConfigDict(from_attributes=True)
