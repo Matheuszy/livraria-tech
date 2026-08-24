@@ -8,7 +8,7 @@ class AdminSchema(BaseModel):
 class AdminCreate(AdminSchema):
     pass
 
-class AdminResponse(AdminSchema):
-    id: int
-    class Config:
-        model_config = ConfigDict(from_attributes=True)
+    class AdminResponse(AdminSchema):
+        id: int
+        class Config:
+            model_config = ConfigDict(from_attributes=True)
