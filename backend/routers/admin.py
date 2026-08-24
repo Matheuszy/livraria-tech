@@ -5,9 +5,9 @@ from backend.config.dependencies import get_session
 from backend.config.crypt_config import bcrypt
 from backend.schemas.admin_schema import AdminSchema
 
-auth_router = APIRouter(prefix="/auth", tags=["auth"])
+admin_router = APIRouter(prefix="/auth", tags=["auth"])
 
-@auth_router.post("/criar-conta")
+@admin_router.post("/criar-conta")
 async def criar_conta(admin_schema: AdminSchema, session:Session = Depends(get_session)):
 
     admin = session.query(Admin).filter(Admin.email == admin_schema.email).first()
