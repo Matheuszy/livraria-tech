@@ -13,7 +13,7 @@ async def get_books():
 
 @order_router.post("/order")
 async def post_order(order_schema: PedidoSchema,session:Session = Depends(get_session)):
-    new_order = Order(cliente=PedidoSchema.id_cliente)
+    new_order = Order(cliente=pedido_schema.id_cliente)
     session.add(new_order)
     session.commit()
     return {"message": "Pedido criado com sucesso"}
