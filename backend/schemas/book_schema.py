@@ -9,7 +9,7 @@ class BookSchema(BaseModel):
 class BookCreate(BookSchema):
     pass
 
-class BookResponse(BookSchema):
-    id: int
-    class Config:
-        model_config = ConfigDict(from_attributes=True)
+    class BookResponse(BookSchema):
+        id: int
+        class Config:
+            model_config = ConfigDict(from_attributes=True)
