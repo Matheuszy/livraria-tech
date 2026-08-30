@@ -1,10 +1,11 @@
 from sqlalchemy import \
     Column, Integer, String, ForeignKey
 from backend.config.database_config import Base
+from sqlalchemy.orm import relationship
 
 
 class Book(Base):
-    __tablename___= 'books'
+    __tablename__= 'books'
     
     id = Column(
         "id",
@@ -32,11 +33,22 @@ class Book(Base):
         String, 
         nullable=False)
 
+    admin_id = Column(
+        "admin_id",
+        Integer, 
+    ForeignKey("admins.id"), 
+    nullable=True)
+
+
+    admin = relationship("Admin", 
+    back_populates="books")
+
     
-    def __init__(self, nome, descricao, valor, url_imagem):
+    def __init__(self, nome, descricao, valor, url_imagem, admin_id=None):
         self.nome = nome
         self.descricao = descricao
         self.valor = valor
         self.url_imagem = url_imagem
+        self.admin_id = admin_id
 
     

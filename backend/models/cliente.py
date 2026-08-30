@@ -1,18 +1,21 @@
 from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import composite, relationship
 from backend.config.database_config import Base
 from backend.models.valueObjects.endereco import Endereco
-from sqlalchemy.orm import composite
 
 class Cliente(Base):
     __tablename__ = "clientes"
 
-    id = Column("id",
-                Integer,
-                primary_key=True)
+    id = Column(
+        "id",
+        Integer,
+        primary_key=True,
+        autoincrement=True
+    )
 
     nome_completo = Column(
         "nome",
-        String(),
+        String(200),
         nullable=False
     )
 
@@ -32,7 +35,7 @@ class Cliente(Base):
     password = Column(
         "password",
         String(200),
-        nullable=False,
+        nullable=False
     )
 
     telephone = Column(
@@ -51,6 +54,9 @@ class Cliente(Base):
         Column("estado", String(200)),
         Column("cep", String(200)),
     )
+
+   
+    orders = relationship("Order", back_populates="cliente")
 
     def __init__(self, nome, age, email, password, telephone, endereco):
         self.nome_completo = nome
