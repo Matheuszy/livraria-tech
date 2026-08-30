@@ -30,10 +30,7 @@ class Admin(Base):
         String(255), 
         nullable=False)
 
-    books = relationship(
-        "Book", 
-        back_populates="admin"
-    )
+    books = relationship("Book", back_populates="admin")
 
     def __init__(self, username, email, password):
         self.username = username

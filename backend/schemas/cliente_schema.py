@@ -32,5 +32,6 @@ class LoginSchema(BaseModel):
 
 
     class LoginResponse(BaseModel):
+        id: int
         class Config:
             model_config = ConfigDict(from_attributes=True)
