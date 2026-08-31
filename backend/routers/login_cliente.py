@@ -49,3 +49,11 @@ async def logar(login_schema: LoginSchema, session: Session = Depends(get_sessio
                 "refresh_token": refresh_token,
                 "token_type": "Bearer"}
 
+@cliente_auth_router.get("/refresh_token_cliente")
+async def refresh_token(token):
+    cliente = check_token(token)
+    acess_token = token_jwt(cliente.id)
+    return {
+        "acess_token": acess_token,
+        "token_type": "Bearer"
+    }
