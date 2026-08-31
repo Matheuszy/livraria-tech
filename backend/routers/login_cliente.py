@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from backend.config.crypt_config import bcrypt
 from backend.config.dependencies import get_session
+from datetime import datetime, timedelta, timezone
 from backend.schemas.cliente_schema import ClienteSchema, LoginSchema
 from backend.models.cliente import Cliente
 from backend.models.valueObjects.endereco import Endereco
@@ -42,5 +43,9 @@ async def logar(login_schema: LoginSchema, session: Session = Depends(get_sessio
 
     else:
             access_token = token_jwt(cliente.id)
-            return {"acess_token": access_token, "token_type": "Bearer"}
+            refresh_token = token_jwt(cliente.id, duracao=timedelta(days=12))
+            return {
+                "acess_token": access_token,
+                "refresh_token": refresh_token,
+                "token_type": "Bearer"}
 

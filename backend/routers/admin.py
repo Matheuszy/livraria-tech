@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from backend.models.admin import Admin
 from sqlalchemy.orm import sessionmaker, Session
 from backend.config.dependencies import get_session
+from datetime import datetime, timedelta, timezone
 from backend.config.crypt_config import bcrypt
 from backend.schemas.admin_schema import AdminSchema, LoginAdmin
 
@@ -28,4 +29,8 @@ async def login_admin(admin_login: LoginAdmin, session: Session = Depends(get_se
         raise HTTPException(status_code=401, detail="E-mail ou senha incorretos")
     else:
         access_token = token_jwt(admin.id)
-        return {"acess_token": access_token, "token_type": "Bearer"}
+        refresh_token = token_jwt(admin.id, duracao=timedelta(days=15))
+        return {
+            "acess_token": access_token,
+            "refresh_token": refresh_token,
+            "token_type": "Bearer"}
