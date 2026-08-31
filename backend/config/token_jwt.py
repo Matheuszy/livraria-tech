@@ -15,4 +15,3 @@ def token_jwt(id_cliente):
     dic_info = {"sub": id_cliente, "exp": data_expira}
     jtw_encode = jwt.encode(dic_info, SECRET_KEY, ALGORITH)
     return jtw_encode
-

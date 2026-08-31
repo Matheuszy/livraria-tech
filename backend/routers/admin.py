@@ -20,11 +20,11 @@ async def criar_conta(admin_schema: AdminSchema, session:Session = Depends(get_s
         session.commit()
         return {"message": f"Conta criada com sucesso {novo_admin.email}"}
 
-@login_admin.post("/admin/logar")
+@admin_router.post("/admin/logar")
 async def login_admin(admin_login: LoginAdmin, session: Session = Depends(get_session)):
     admin = session.query(Admin).filter(Admin.email == admin_login.email).first()
 
-    if not admin or token_jwt(admin.id):
+    if not admin or not bcrypt.verify(admin_login.password, admin.password):
         raise HTTPException(status_code=401, detail="E-mail ou senha incorretos")
     else:
         access_token = token_jwt(admin.id)
