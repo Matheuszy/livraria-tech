@@ -19,9 +19,8 @@ class LoginAdmin(BaseModel):
     email: str
     password: str
 
-
-    class LoginResponseAdmin(LoginAdmin):
-        id: int
-        class Config:
-            model_config = ConfigDict(from_attributes=True)
+class LoginResponseAdmin(LoginAdmin):
+    id: int
+    class Config:
+         model_config = ConfigDict(from_attributes=True)
             
