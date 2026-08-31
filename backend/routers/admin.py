@@ -4,8 +4,10 @@ from sqlalchemy.orm import sessionmaker, Session
 from backend.config.dependencies import get_session
 from datetime import datetime, timedelta, timezone
 from backend.config.crypt_config import bcrypt
-from backend.config.token_jwt import check_token
+from backend.config.token_jwt import CheckToken
 from backend.schemas.admin_schema import AdminSchema, LoginAdmin
+
+check_admin_token = CheckToken(Admin)
 
 admin_router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -36,11 +38,10 @@ async def login_admin(admin_login: LoginAdmin, session: Session = Depends(get_se
             "refresh_token": refresh_token,
             "token_type": "Bearer"}
 
-@admin_auth_router.get("/refresh_token_admin")
-async def refresh_token(token):
-    admin = check_token(token)
-    acess_token = token_jwt(admin.id)
+@admin_router.get("/refresh_token_admin")
+async def refresh_token(admin: Admin = Depends(check_admin_token)):
+    access_token = token_jwt(admin.id)
     return {
-        "acess_token": acess_token,
+        "acess_token": access_token,
         "token_type": "Bearer"
     }

@@ -5,9 +5,11 @@ from backend.config.dependencies import get_session
 from datetime import datetime, timedelta, timezone
 from backend.schemas.cliente_schema import ClienteSchema, LoginSchema
 from backend.models.cliente import Cliente
+from backend.config.token_jwt import CheckToken
 from backend.models.valueObjects.endereco import Endereco
 from backend.config.token_jwt import token_jwt
 
+check_cliente_token = CheckToken(Cliente)
 login_router = APIRouter(prefix="/login", tags=["login"])
 
 @login_router.post("/cliente-cadastro")
@@ -49,9 +51,8 @@ async def logar(login_schema: LoginSchema, session: Session = Depends(get_sessio
                 "refresh_token": refresh_token,
                 "token_type": "Bearer"}
 
-@cliente_auth_router.get("/refresh_token_cliente")
-async def refresh_token(token):
-    cliente = check_token(token)
+@login_router.get("/refresh_token_cliente")
+async def refresh_token(cliente: Cliente = Depends(check_cliente_token)):
     acess_token = token_jwt(cliente.id)
     return {
         "acess_token": acess_token,
