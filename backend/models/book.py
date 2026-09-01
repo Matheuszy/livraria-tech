@@ -1,5 +1,5 @@
 from sqlalchemy import \
-    Column, Integer, String, ForeignKey
+    Column, Integer, String, ForeignKey, Float
 from backend.config.database_config import Base
 from sqlalchemy.orm import relationship
 
@@ -25,7 +25,7 @@ class Book(Base):
     
     valor = Column(
         "preco",
-        Integer, 
+        Float, 
         nullable=False)
     
     url_imagem = Column(
@@ -39,6 +39,11 @@ class Book(Base):
     ForeignKey("admins.id"), 
     nullable=True)
 
+    pedido_id = Column(
+        "pedido_id", 
+        Integer, 
+        ForeignKey("orders.id"), 
+        nullable=True)
 
     admin = relationship("Admin", 
     back_populates="books")
