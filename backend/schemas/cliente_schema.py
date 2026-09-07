@@ -1,4 +1,5 @@
 from pydantic import BaseModel,ConfigDict
+from sqlalchemy import Column, Integer, String, Boolean
 
 class EnderecoSchema(BaseModel):
     rua: str
@@ -14,6 +15,7 @@ class ClienteSchema(BaseModel):
     age: int
     email: str
     password: str
+    ativo: Boolean
     telefone: str
     endereco: EnderecoSchema
 
