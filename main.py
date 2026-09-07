@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from backend.routers.admin import admin_router
 from backend.routers.orders import order_router
 from backend.routers.login_cliente import login_router
+from backend.routers.admin_book import admin_book_router
 from backend.models.admin import Admin
 from backend.models.book import Book
 from backend.models.cliente import Cliente
@@ -13,3 +14,4 @@ app = FastAPI()
 app.include_router(admin_router)
 app.include_router(login_router)
 app.include_router(order_router)
+app.include_router(admin_book_router)
