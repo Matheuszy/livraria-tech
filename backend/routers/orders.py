@@ -8,10 +8,11 @@ from backend.models.book import Book
 from backend.models.cliente import Cliente
 from backend.models.order import Order
 from backend.schemas.pedido_schema import PedidoSchema
+from backend.schemas.book_schema import BookSchema
 
 
 cliente_autenticato = CheckToken(Cliente)
-check_admin_token = CheckToken(Admin)
+
 
 order_router = APIRouter(prefix="/orders", tags=["orders"])
 
@@ -95,30 +96,6 @@ async def cancel_order(
     }
 
 
-# --- ROTA: Listar Todos os Pedidos (Apenas Admin) ---
-@order_router.get("/all/orders")
-async def all_orders(
-    page: int = Query(1, ge=1, description="Número da página"),
-    limit: int = Query(50, le=100, description="Quantidade de registros por página"),
-    admin: Admin = Depends(check_admin_token), 
-    session: Session = Depends(get_session)
-):
 
-    offset_value = (page - 1) * limit
-    total_orders = session.query(Order).count()
 
-    orders = (
-        session.query(Order)
-        .order_by(Order.id.desc())
-        .offset(offset_value)
-        .limit(limit)
-        .all()
-    )
 
-    return {
-        "page": page,
-        "limit": limit,
-        "total_records": total_orders,
-        "total_pages": (total_orders + limit - 1),
-        "orders": orders
-    }
