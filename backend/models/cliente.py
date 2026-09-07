@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, Boolean
 from sqlalchemy.orm import composite, relationship
 from backend.config.database_config import Base
 from backend.models.valueObjects.endereco import Endereco
@@ -38,6 +38,14 @@ class Cliente(Base):
         nullable=False
     )
 
+    ativo = Column(
+        "ativo",
+        Boolean,
+        default=True,          
+        server_default="true",
+        nullable=False
+    )
+
     telephone = Column(
         "telefone",
         String(200),
@@ -63,5 +71,6 @@ class Cliente(Base):
         self.age = age
         self.email = email
         self.password = password
+        self.ativo = True,
         self.telephone = telephone
         self.endereco = endereco

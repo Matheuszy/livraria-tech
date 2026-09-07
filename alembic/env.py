@@ -34,6 +34,12 @@ if config.config_file_name is not None:
 # add your model's MetaData object here
 # for 'autogenerate' support
 from backend.config.database_config import Base
+from backend.models.admin import Admin
+from backend.models.book import Book
+from backend.models.cliente import Cliente
+from backend.models.order import Order
+
+
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,

@@ -29,6 +29,7 @@ async def cliente_cadastro(cliente_schema: ClienteSchema, session: Session = Dep
                                cliente_schema.age,
                                cliente_schema.email,
                                cript,
+                               cliente_schema.ativo,
                                cliente_schema.telefone,
                                novo_endereco
                                )

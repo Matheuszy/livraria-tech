@@ -1,11 +1,13 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
-from sqlalchemy.orm import relationship
+from typing import List
+from sqlalchemy.orm import relationship, Mapped
 from backend.config.database_config import Base
 from backend.models.book import Book
 
 class Order(Base):
 
     __tablename__ = "orders"
+    
 
     id = Column(
         "id",
@@ -21,7 +23,7 @@ class Order(Base):
         nullable=False
     )
 
-    books: List[Book] = relationship(
+    books: Mapped[List[Book]] = relationship(
         "Book", 
         backref="pedido", 
         cascade="all, delete-orphan")
