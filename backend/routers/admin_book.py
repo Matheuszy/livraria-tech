@@ -62,3 +62,37 @@ async def create_book(
         return {
             "message": f"livro criado com sucesso {new_book.nome}"
         }
+
+
+@admin_book_router.put("/update-book/{id_book}")
+async def update_book(
+    id_book: int,
+    book: BookSchema,
+    admin: Admin = Depends(check_admin_token), 
+    session: Session = Depends(get_session)
+    
+):
+
+    exists_book = session.query(Book).filter(Book.id == id_book).first()
+    if not exists_book:
+        raise HTTPException(
+            status_code=400,
+            detail="Livro não encontrado"
+        )
+    
+    existing_book.nome = book_schema.nome
+    existing_book.descricao = book_schema.descricao
+    existing_book.valor = book_schema.valor
+    existing_book.url_imagem = book_schema.url_imagem
+    existing_book.admin_id = admin.id
+
+    session.commit()
+    session.refresh(existing_book)
+
+    return {
+        "message": "Livro atualizado com sucesso",
+        "book": existing_book
+    }
+
+
+
