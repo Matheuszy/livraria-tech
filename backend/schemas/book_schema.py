@@ -3,6 +3,8 @@ from pydantic import BaseModel,ConfigDict
 class BookSchema(BaseModel):
     nome: str
     descricao: str
+    autor: str
+    editora: str
     valor: int 
     url_imagem: str
 
