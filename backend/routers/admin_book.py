@@ -50,6 +50,8 @@ async def create_book(
         new_book = Book(
             nome=book.nome,
             descricao=book.descricao,
+            autor=book.autor,
+            editora=book.editora,
             valor=book.valor,
             url_imagem=book.url_imagem,
             admin_id=admin.id
@@ -82,6 +84,8 @@ async def update_book(
     
     existing_book.nome = book_schema.nome
     existing_book.descricao = book_schema.descricao
+    exists_book.autor = book_schema.autor
+    exists_book.editora = book_schema.editora
     existing_book.valor = book_schema.valor
     existing_book.url_imagem = book_schema.url_imagem
     existing_book.admin_id = admin.id
