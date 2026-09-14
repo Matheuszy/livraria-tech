@@ -22,6 +22,18 @@ class Book(Base):
         "descricao",
         String(200), 
         nullable=False)
+
+    autor = Column(
+        "Autor(a)",
+        String,
+        nullable=False
+    )
+
+    editora = Column(
+        "editora",
+        String,
+        nullable=False
+    )
     
     valor = Column(
         "preco",
@@ -49,9 +61,11 @@ class Book(Base):
     back_populates="books")
 
     
-    def __init__(self, nome, descricao, valor, url_imagem, admin_id=None):
+    def __init__(self, nome, descricao, autor, editora, valor, url_imagem, admin_id=None):
         self.nome = nome
         self.descricao = descricao
+        self.autor = autor
+        self.editora = editora
         self.valor = valor
         self.url_imagem = url_imagem
         self.admin_id = admin_id
